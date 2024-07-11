@@ -1,3 +1,6 @@
+
+import { SteganographyEncrypter } from "./SteganographyEncrypter.js"
+
 const HIDDEN_TEXT_MESSAGE = "Eu sou uma mensagem escondida teste"
 
 const fileCryptInput = document.getElementById('crypt')
@@ -20,12 +23,14 @@ const handleFileDecryptSubmition = async (event) => {
 const handleFileCryptSubmition = async (event) => {
    const file = [...event.target.files][0]
    const base64 = await readFileContent(file)
+   const imageData = await createImageDataFromBase64(base64)
 
    cryptLoadedPreview.src = base64
 
-   const encryptedImage = await encryptImage(base64)
+   const encryptedImage = SteganographyEncrypter.encrypt(imageData, "___" + HIDDEN_TEXT_MESSAGE + "___")
+   const finalBase64 = createBase64FromImageData(encryptedImage)
 
-   cryptResultPreview.src = encryptedImage
+   cryptResultPreview.src = finalBase64
 }
 
 const readFileContent = (file) => {
@@ -38,17 +43,8 @@ const readFileContent = (file) => {
    })
 }
 
-
-const encryptImage = async (base64) => {
-   const originalImageData = await createImageByteArray(base64)
-   const encryptedImageData = insertMessageIntoImageData(originalImageData, '___' + HIDDEN_TEXT_MESSAGE + '___')
-   const finalBase64 = createBase64FromImageData(encryptedImageData)
-
-   return finalBase64
-}
-
 const decryptImage = async (base64) => {
-   const imageData = await createImageByteArray(base64)
+   const imageData = await createImageDataFromBase64(base64)
    const content = []
    const chars = []
 
@@ -81,7 +77,7 @@ const decryptImage = async (base64) => {
    return chars.join('').split('___')[1]
 }
 
-const createImageByteArray = async (base64) => {
+const createImageDataFromBase64 = async (base64) => {
    const image = await loadImage(base64)
    const context = prepareCanvasWithImage(image)
 
