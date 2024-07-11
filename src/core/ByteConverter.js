@@ -1,14 +1,13 @@
-export class ByteConverter{
+export class ByteConverter {
 
-
-   static getCharacterAsByte(character){
+   static getCharacterAsByte(character) {
       return character
          .charCodeAt(0)
          .toString(2)
          .padStart(8, '0')
    }
 
-   static getNumberAsByte(number){
+   static getNumberAsByte(number) {
       return number
          .toString(2)
          .padStart(8, '0')

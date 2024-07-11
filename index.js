@@ -1,5 +1,5 @@
 
-import { SteganographyEncrypter } from "./SteganographyEncrypter.js"
+import { SteganographyEncrypter } from "./src/core/SteganographyEncrypter.js"
 
 const HIDDEN_TEXT_MESSAGE = "Eu sou uma mensagem escondida teste"
 
