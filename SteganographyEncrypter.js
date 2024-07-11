@@ -27,6 +27,40 @@ export class SteganographyEncrypter {
       return newImage
    }
 
+   static decrypt(imageData){
+      const content = []
+      const chars = []
+   
+      for(let i = 0; i < imageData.data.length; i++){
+         if((i + 1) % 4 === 0){
+            continue
+         }
+   
+         const value = imageData.data[i]
+         const byteString = value.toString(2).padStart(8, '0')
+         const lastBytes = byteString.slice(7)
+         
+         content.push(lastBytes)
+      }
+   
+      for(let i = 0; i < content.length / 8; i++){
+         const char = []
+   
+         for(let j = 0; j < 8; j++){
+            char.push(content[i * 8 + j])
+         }
+   
+         const byte = char.join('')
+         const charCode = parseInt(byte, 2)
+         const charString = String.fromCharCode(charCode)
+   
+
+         chars.push(charString)
+      }
+   
+      return chars.join('').split('___')[1]
+   }
+
    static #getImageDataIndexToReplace(i, j){         
       return (i * 8 + j) + Math.floor((i * 8 + j) / 3)
    }

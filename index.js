@@ -9,15 +9,15 @@ const fileDecryptInput = document.getElementById('decrypt')
 const cryptLoadedPreview = document.querySelector('#crypt-load-preview')
 const cryptResultPreview = document.querySelector('#crypt-result-preview')
 
-const decryptLoadedPreview = document.querySelector('#decrypt-load-preview')
-const decryptResultPreview = document.querySelector('#decrypt-result-preview')
+const decryptResult = document.querySelector('.result')
 
 const handleFileDecryptSubmition = async (event) => {
    const file = [...event.target.files][0]
    const base64 = await readFileContent(file)
-   const message = await decryptImage(base64)
+   const imageData = await createImageDataFromBase64(base64)
+   const message = SteganographyEncrypter.decrypt(imageData)
 
-   console.log(message)
+   decryptResult.textContent = message
 }
 
 const handleFileCryptSubmition = async (event) => {
@@ -48,22 +48,22 @@ const decryptImage = async (base64) => {
    const content = []
    const chars = []
 
-   for(let i = 0; i < imageData.data.length; i++){
-      if((i + 1) % 4 === 0){
+   for (let i = 0; i < imageData.data.length; i++) {
+      if ((i + 1) % 4 === 0) {
          continue
       }
 
       const value = imageData.data[i]
       const byteString = value.toString(2).padStart(8, '0')
       const lastBytes = byteString.slice(7)
-      
+
       content.push(lastBytes)
    }
 
-   for(let i = 0; i < content.length / 8; i++){
+   for (let i = 0; i < content.length / 8; i++) {
       const char = []
 
-      for(let j = 0; j < 8; j++){
+      for (let j = 0; j < 8; j++) {
          char.push(content[i * 8 + j])
       }
 
@@ -157,10 +157,10 @@ const download = (fileName, download) => {
 }
 
 const handleResultImageClick = (event) => {
-   if(!event.ctrlKey){
+   if (!event.ctrlKey) {
       return
    }
-   
+
    download('imagem.png', cryptResultPreview.src)
 }
 
