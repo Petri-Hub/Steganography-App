@@ -1,65 +1,13 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Steganography App</title>
-   <style>
-      *{
-         box-sizing: border-box;
-         color: #ccc;
-         font-family: 'Roboto';
-      }
-
-      html, body{
-         width: 100%;
-         height: 100vh;
-         padding: 0;
-         margin: 0;
-      }
-
-      body{
-         background-color: #222;
-         display: grid;
-         place-items: center;
-         align-content: center;
-         row-gap: 3rem;
-      }
-      
-
-      .previews{
-         width: 80%;
-         display: grid;
-         grid-template-columns: 1fr 1fr;
-      }
-
-      #decrypt-load-preview,
-      #decrypt-result-preview,
-      #crypt-load-preview,
-      #crypt-result-preview{
-         width: 100%;
-         height: auto;
-      }
-
-   </style>
-</head>
-   <div class="previews">
-      <img id="crypt-load-preview">
-      <img id="crypt-result-preview">
-   </div>
-   <div>
-      <label for="crypt">Criptar</label>
-      <input type="file" id="crypt">
-   </div>
-   <div class="previews">
-      <img id="decrypt-load-preview">
-      <img id="decrypt-result-preview">
-   </div>
-   <div>
-      <label for="decrypt">Descriptar</label>
-      <input type="file" id="decrypt">
-      <span class="result"></span>
-   </div>
-   <script defer type="module" src="index.js"></script>
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React + TS</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
