@@ -22,23 +22,42 @@
          background-color: #222;
          display: grid;
          place-items: center;
+         align-content: center;
+         row-gap: 3rem;
       }
       
 
+      .previews{
+         width: 80%;
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+      }
+
+      #decrypt-load-preview,
+      #decrypt-result-preview,
+      #crypt-load-preview,
+      #crypt-result-preview{
+         width: 100%;
+         height: auto;
+      }
+
    </style>
 </head>
-<>
-   <div>
-      <img id="load-preview">
-      <img id="result-preview">
+   <div class="previews">
+      <img id="crypt-load-preview">
+      <img id="crypt-result-preview">
    </div>
    <div>
       <label for="crypt">Criptar</label>
-      <input type="file" id="crypt" placeholder="Criptografar">
+      <input type="file" id="crypt">
+   </div>
+   <div class="previews">
+      <img id="decrypt-load-preview">
+      <img id="decrypt-result-preview">
    </div>
    <div>
       <label for="decrypt">Descriptar</label>
-      <input type="file" id="crypt" placeholder="Criptografar">
+      <input type="file" id="decrypt">
    </div>
    <script src="index.js"></script>
 </body>

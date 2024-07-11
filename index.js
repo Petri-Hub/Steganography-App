@@ -1,14 +1,31 @@
 const HIDDEN_TEXT_MESSAGE = "Eu sou uma mensagem escondida teste"
 
-const fileInput = document.querySelector('[type=file]')
-const imageLoadedPreview = document.querySelector('#load-preview')
-const imageResultPreview = document.querySelector('#result-preview')
+const fileCryptInput = document.getElementById('crypt')
+const fileDecryptInput = document.getElementById('decrypt')
 
-const handleFileSubmition = async (event) => {
+const cryptLoadedPreview = document.querySelector('#crypt-load-preview')
+const cryptResultPreview = document.querySelector('#crypt-result-preview')
+
+const decryptLoadedPreview = document.querySelector('#decrypt-load-preview')
+const decryptResultPreview = document.querySelector('#decrypt-result-preview')
+
+const handleFileDecryptSubmition = async (event) => {
    const file = [...event.target.files][0]
    const base64 = await readFileContent(file)
+   const message = await decryptImage(base64)
+
+   console.log(message)
+}
+
+const handleFileCryptSubmition = async (event) => {
+   const file = [...event.target.files][0]
+   const base64 = await readFileContent(file)
+
+   cryptLoadedPreview.src = base64
+
    const encryptedImage = await encryptImage(base64)
 
+   cryptResultPreview.src = encryptedImage
 }
 
 const readFileContent = (file) => {
@@ -21,14 +38,47 @@ const readFileContent = (file) => {
    })
 }
 
-const encryptImage = async (base64) => {
-   imageLoadedPreview.src = base64
 
+const encryptImage = async (base64) => {
    const originalImageData = await createImageByteArray(base64)
-   const encryptedImageData = insertMessageIntoImageData(originalImageData, HIDDEN_TEXT_MESSAGE)
+   const encryptedImageData = insertMessageIntoImageData(originalImageData, '___' + HIDDEN_TEXT_MESSAGE + '___')
    const finalBase64 = createBase64FromImageData(encryptedImageData)
 
-   imageResultPreview.src = finalBase64
+   return finalBase64
+}
+
+const decryptImage = async (base64) => {
+   const imageData = await createImageByteArray(base64)
+   const content = []
+   const chars = []
+
+   for(let i = 0; i < imageData.data.length; i++){
+      if((i + 1) % 4 === 0){
+         continue
+      }
+
+      const value = imageData.data[i]
+      const byteString = value.toString(2).padStart(8, '0')
+      const lastBytes = byteString.slice(7)
+      
+      content.push(lastBytes)
+   }
+
+   for(let i = 0; i < content.length / 8; i++){
+      const char = []
+
+      for(let j = 0; j < 8; j++){
+         char.push(content[i * 8 + j])
+      }
+
+      const byte = char.join('')
+      const charCode = parseInt(byte, 2)
+      const charString = String.fromCharCode(charCode)
+
+      chars.push(charString)
+   }
+
+   console.log(chars.join(''));
 }
 
 const createImageByteArray = async (base64) => {
@@ -102,6 +152,22 @@ const createBase64FromImageData = (imageData) => {
    return canvas.toDataURL('image/png', 1)
 }
 
+const download = (fileName, download) => {
+   const anchor = document.createElement('a')
 
+   anchor.setAttribute('download', fileName)
+   anchor.setAttribute('href', download)
+   anchor.click()
+}
 
-fileInput.addEventListener('change', (event) => handleFileSubmition(event))
+const handleResultImageClick = (event) => {
+   if(!event.ctrlKey){
+      return
+   }
+   
+   download('imagem.png', cryptResultPreview.src)
+}
+
+fileCryptInput.addEventListener('change', (event) => handleFileCryptSubmition(event))
+fileDecryptInput.addEventListener('change', (event) => handleFileDecryptSubmition(event))
+cryptResultPreview.addEventListener('click', (event) => handleResultImageClick(event))
