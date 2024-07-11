@@ -78,7 +78,7 @@ const decryptImage = async (base64) => {
       chars.push(charString)
    }
 
-   console.log(chars.join(''));
+   return chars.join('').split('___')[1]
 }
 
 const createImageByteArray = async (base64) => {
