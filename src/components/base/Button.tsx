@@ -8,7 +8,7 @@ export default function Button({
 }: React.ComponentProps<'button'>) {
    return (
       <button
-         className={twMerge("rounded cursor-pointer text-primary bg-third py-3 w-full", className)}
+         className={twMerge("rounded cursor-pointer duration-100 hover:opacity-90 md:text-sm text-sm text-primary bg-third py-3 px-8", className)}
          type={type}
          {...props}>
          {children}
