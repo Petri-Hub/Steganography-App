@@ -8,7 +8,7 @@ export default {
       colors: {
          primary: '#C6C6C6',
          secondary: '#151515',
-         third: '#242424',
+         third: '#1D1D1D',
          fourth: '#636262',
          links: '#1C74DB'
       },
