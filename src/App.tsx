@@ -1,8 +1,8 @@
 import Main from "./components/Main"
-import Container from "./components/Container"
-import Title from "./components/Title"
-import Text from "./components/Text"
-import Button from "./components/Button"
+import Container from "./components/base/Container"
+import Title from "./components/base/Title"
+import Text from "./components/base/Text"
+import Button from "./components/base/Button"
 
 export default function App() {
    return (
