@@ -1,15 +1,11 @@
 import { twMerge } from "tailwind-merge"
 
-type ButtonProps = Partial<{
-   className: string
-}> & React.PropsWithChildren & React.ComponentProps<'button'>
-
-export default function Button({
-   className,
-   type = 'button',
-   children,
-   ...props
-}: ButtonProps) {
+export default function Button({ 
+   type = 'button', 
+   className, 
+   children, 
+   ...props 
+}: React.ComponentProps<'button'>) {
    return (
       <button
          className={twMerge("rounded cursor-pointer text-primary bg-third py-3 w-full", className)}
