@@ -10,7 +10,11 @@ import dogImage from '../../assets/images/dog.png'
 import Button from "../base/Button";
 import HeroImage from "../HeroImage";
 
-export default function HeroSection() {
+type HeroSectionProps = {
+   onContinue: () => unknown
+}
+
+export default function HeroSection({ onContinue }: HeroSectionProps) {
    return (
       <div className="flex flex-col items-center justify-center">
          <div className="space-y-1 mb-12">
@@ -52,7 +56,7 @@ export default function HeroSection() {
                In this case Images!
             </Text>
          </div>
-         <Button className="mt-8">Continue -></Button>
+         <Button onClick={onContinue} className="mt-8">Continue -></Button>
       </div>
    )
 }
